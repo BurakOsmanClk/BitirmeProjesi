@@ -16,15 +16,19 @@ public class MouseMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY= Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        if (!InventorySystem.Instance.isOpen)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        xRotation -= mouseY; //yukari asagi dondurme
+            xRotation -= mouseY; //yukari asagi dondurme
 
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f); //bakis acisini kisitlar
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f); //bakis acisini kisitlar
 
-        yRotation += mouseX; // saga sola dondurme
+            yRotation += mouseX; // saga sola dondurme
 
-        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f); //birlestirme
+            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f); //birlestirme
+        }
+        
     }
 }
