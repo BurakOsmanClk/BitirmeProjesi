@@ -8,6 +8,8 @@ public class SelectionManager : MonoBehaviour
     public float interactionRange = 5f;
     Text interactionText;
 
+
+
     void Start()
     {
         interactionText = interactionInfoUI.GetComponent<Text>();

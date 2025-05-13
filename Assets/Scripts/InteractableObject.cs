@@ -8,6 +8,8 @@ public class InteractableObject : MonoBehaviour
     // playerInRange singleton ile yapýlabilir ancak bu kodda ekstra yük bindirse de raycast sistemini tekrar kullandým.
     Camera mainCamera;
 
+
+
     void Start()
     {
         mainCamera = Camera.main;
