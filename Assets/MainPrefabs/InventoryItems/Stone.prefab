@@ -10,7 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: dd83a56d3f3dcf048a9d5d85577db695, type: 3}
       propertyPath: m_Name
-      value: Stone1_detail
+      value: Stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: dd83a56d3f3dcf048a9d5d85577db695, type: 3}
+      propertyPath: m_TagString
+      value: Pickable
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: dd83a56d3f3dcf048a9d5d85577db695, type: 3}
       propertyPath: m_LocalPosition.x
@@ -102,3 +106,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemName: Stone
+  playerInRange: 0
+  detectionRange: 5

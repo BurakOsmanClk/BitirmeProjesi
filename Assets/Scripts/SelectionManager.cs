@@ -8,6 +8,9 @@ public class SelectionManager : MonoBehaviour
     public float interactionRange = 5f;
     Text interactionText;
 
+    public Image centerDot;
+    public Image handIcon;
+
 
 
     void Start()
@@ -30,16 +33,30 @@ public class SelectionManager : MonoBehaviour
                 interactionText.text = selectionTransform.GetComponent<InteractableObject>().GetItemName();
                 interactionInfoUI.SetActive(true);
                 //Debug.Log("1. secenek oldu");
+                if (selectionTransform.CompareTag("Pickable"))
+                {
+                    centerDot.gameObject.SetActive(false);
+                    handIcon.gameObject.SetActive(true);
+                }
+                else
+                {
+                    centerDot.gameObject.SetActive(true);
+                    handIcon.gameObject.SetActive(false);   
+                }
             }
             else
             {
                 interactionInfoUI.SetActive(false);
+                centerDot.gameObject.SetActive(true);
+                handIcon.gameObject.SetActive(false);
                 //Debug.Log("2. secenek oldu");
             }
         }
         else
         {
             interactionInfoUI.SetActive(false);
+            centerDot.gameObject.SetActive(true);
+            handIcon.gameObject.SetActive(false);
             //Debug.Log("3. secenek oldu");
         }
     }
