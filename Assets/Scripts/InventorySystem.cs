@@ -42,6 +42,7 @@ public class InventorySystem : MonoBehaviour
         isOpen = false;
         isFull = false;
         PopulateSlotList();
+        Cursor.visible = false;
     }
 
 
@@ -55,6 +56,10 @@ public class InventorySystem : MonoBehaviour
             inventoryScreenUI.SetActive(true);
             isOpen = true;
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            SelectionManager.Instance.DisableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
 
         }
         else if (Input.GetKeyDown(KeyCode.I) && isOpen)
@@ -64,6 +69,10 @@ public class InventorySystem : MonoBehaviour
             if (!CraftingSystem.Instance.isOpen)
             {
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+
+                SelectionManager.Instance.EnableSelection();
+                SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
             }
             isOpen = false;
         }
@@ -91,6 +100,7 @@ public class InventorySystem : MonoBehaviour
             RecalculateList();
             CraftingSystem.Instance.RefreshNeededItems();
             TriggerPickUpPopUp(itemName, itemToAdd.GetComponent<Image>().sprite);
+            StartCoroutine(ClosePickUpAlert());
     }
 
     void TriggerPickUpPopUp(string itemName, Sprite itemSprite)
@@ -98,6 +108,13 @@ public class InventorySystem : MonoBehaviour
         pickUpAlert.SetActive(true);
         pickUpName.text= itemName;
         pickUpImage.sprite = itemSprite;
+    }
+    public IEnumerator ClosePickUpAlert()
+    {
+        yield return new WaitForSeconds(2f);
+
+        pickUpAlert.SetActive(false);
+
     }
     public bool CheckIfFull()
     {

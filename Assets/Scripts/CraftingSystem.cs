@@ -41,6 +41,11 @@ public class CraftingSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (InventorySystem.Instance == null)
+        {
+            Debug.LogError("InventorySystem is not initialized! Make sure it's active in the scene before CraftingSystem.");
+        }
+
         isOpen = false;
 
         toolsButton = craftingScreenUI.transform.Find("ToolsButton").GetComponent<Button>();
@@ -66,6 +71,9 @@ public class CraftingSystem : MonoBehaviour
             craftingScreenUI.SetActive(true);
             isOpen = true;
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            SelectionManager.Instance.DisableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
 
         }
         else if (Input.GetKeyDown(KeyCode.C) && isOpen)
@@ -75,6 +83,9 @@ public class CraftingSystem : MonoBehaviour
             if (!InventorySystem.Instance.isOpen)
             {
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                SelectionManager.Instance.EnableSelection();
+                SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
             }
             isOpen = false;
         }
@@ -88,6 +99,9 @@ public class CraftingSystem : MonoBehaviour
 
     void CraftAnyItem(Blueprint blueprintToCraft)
     {
+
+        Debug.Log("Button calisti");
+
         InventorySystem.Instance.AddToInventory(blueprintToCraft.itemName);
 
         if(blueprintToCraft.numOfRequierements == 1)

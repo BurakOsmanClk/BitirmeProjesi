@@ -27,7 +27,10 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public float caloriesEffect;
     public float hydrationEffect;
 
-
+    public bool isEquipapble;
+    private GameObject itemPendingEquipping;
+    public bool isInsideQuickSlot;
+    public bool isSelected;
     private void Start()
     {
         itemInfoUI = InventorySystem.Instance.itemInfoIU;
@@ -36,6 +39,17 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         itemInfoUI_itemFunctionality = itemInfoUI.transform.Find("ItemFunctionality").GetComponent<Text>();
     }
 
+    private void Update()
+    {
+        if(isSelected)
+        {
+            gameObject.GetComponent<DragDrop>().enabled = false;
+        }
+        else
+        {
+            gameObject.GetComponent<DragDrop>().enabled = true;
+        }
+    }
     // Triggered when the mouse enters into the area of the item that has this script.
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -62,6 +76,14 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 // Setting this specific gameobject to be the item we want to destroy later
                 itemPendingConsumption = gameObject;
                 consumingFunction(healthEffect, caloriesEffect, hydrationEffect);
+
+               
+            }
+
+            if (isEquipapble && !isInsideQuickSlot && !EquipSystem.Instance.CheckIfFull())
+            {
+                EquipSystem.Instance.AddToQuickSlots(gameObject);
+                isInsideQuickSlot = true;
             }
         }
     }
